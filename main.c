@@ -164,7 +164,7 @@ void key_roll_dice(void)
 	move(LINES - 2, 0);
 	dice_print(dice);
 	printw("(%d)", result);
-	getch();
+	ungetch(getch());
 }
 
 void (*handle[])(void) = {
