@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #define do_once(thing) do { \
-	static unsigned int done = 0; \
+	static int done = 0; \
 	if (!done) { \
 		thing; \
 		done = !0; \
@@ -14,7 +14,7 @@
 } while (0);
 
 /* Marsiglia xorshift */
-static unsigned int xorshift(unsigned int state)
+static int xorshift(int state)
 {
 	state ^= state << 13;
 	state ^= state >> 17;
@@ -24,7 +24,7 @@ static unsigned int xorshift(unsigned int state)
 
 static int rand(void)
 {
-	static unsigned int state;
+	static int state;
 	do_once(state = time(NULL));
 
 	return state = xorshift(state);
