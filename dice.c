@@ -3,6 +3,7 @@
 
 #include <curses.h>
 #include <time.h>
+#include <limits.h>
 #include <stdio.h>
 
 #define do_once(thing) do { \
@@ -14,7 +15,7 @@
 } while (0);
 
 /* Marsiglia xorshift */
-static int xorshift(int state)
+static unsigned int xorshift(unsigned int state)
 {
 	state ^= state << 13;
 	state ^= state >> 17;
@@ -24,10 +25,10 @@ static int xorshift(int state)
 
 static int rand(void)
 {
-	static int state;
+	static unsigned int state;
 	do_once(state = time(NULL));
 
-	return state = xorshift(state);
+	return (state = xorshift(state)) % INT_MAX;
 }
 
 struct dice dice_scan(char *src)
